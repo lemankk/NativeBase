@@ -1,4 +1,5 @@
 import React, { memo, forwardRef } from 'react';
+import { isValidElementType } from "react-is";
 import InputBase from './InputBase';
 import Box from '../Box';
 import type { IInputProps } from './types';
@@ -12,7 +13,8 @@ const renderSideElement = (ElementType, props) => {
    if (!ElementType) {
       return null; 
    }
-   if (typeof ElementType === "function"){
+   // Detect if elementType, passing props to align same state of child content from Input.
+   if (isValidElementType(ElementType)){
       return <ElementType {...props} />; 
    }
    return ElementType;
