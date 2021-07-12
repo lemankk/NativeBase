@@ -76,10 +76,9 @@ const InputAdvance = (
   const { isHovered } = useHover({}, _ref);
   
   const sideElementProps = {
+    ... inputThemeProps,
     isHovered,
     isFocused,
-    isDisabled,
-    isInvalid,
   };
 
   return (
