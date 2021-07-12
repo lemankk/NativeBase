@@ -7,6 +7,17 @@ import { extractInObject, stylingProps } from '../../../theme/tools/utils';
 import { useHover } from '@react-native-aria/interactions';
 import { mergeRefs } from '../../../utils';
 
+
+const renderSideElement = (ElementType, props) => {
+   if (!ElementType) {
+      return null; 
+   }
+   if (typeof ElementType === "function"){
+      return <ElementType {...props} />; 
+   }
+   return ElementType;
+};
+
 const InputAdvance = (
   {
     InputLeftElement,
@@ -61,6 +72,13 @@ const InputAdvance = (
 
   const _ref = React.useRef(null);
   const { isHovered } = useHover({}, _ref);
+  
+  const sideElementProps = {
+    isHovered,
+    isFocused,
+    isDisabled,
+    isInvalid,
+  };
 
   return (
     <Box
@@ -76,7 +94,7 @@ const InputAdvance = (
       {...(isInvalid && _invalid)}
       ref={mergeRefs([_ref, wrapperRef])}
     >
-      {InputLeftElement ? InputLeftElement : null}
+      {renderSideElement(InputLeftElement, sideElementProps)}
       <InputBase
         inputProps={inputProps}
         {...baseInputProps}
@@ -91,7 +109,7 @@ const InputAdvance = (
           handleFocus(false, onBlur ? () => onBlur(e) : () => {});
         }}
       />
-      {InputRightElement ? InputRightElement : null}
+      {renderSideElement(InputRightElement, sideElementProps)}
     </Box>
   );
 };
